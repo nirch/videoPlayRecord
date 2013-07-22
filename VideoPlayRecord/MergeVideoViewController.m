@@ -14,6 +14,8 @@
 
 @implementation MergeVideoViewController
 
+
+
 @synthesize firstAsset, secondAsset, audioAsset;
 @synthesize activityView;
 
