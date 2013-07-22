@@ -72,13 +72,100 @@
         [activityView startAnimating];
         // 1 - Create AVMutableComposition object. This object will hold your AVMutableCompositionTrack instances.
         AVMutableComposition *mixComposition = [[AVMutableComposition alloc] init];
-        // 2 - Video track
+        
+        // 2 - Create two video tracks
         AVMutableCompositionTrack *firstTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeVideo
                                                                             preferredTrackID:kCMPersistentTrackID_Invalid];
         [firstTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, firstAsset.duration)
                             ofTrack:[[firstAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0] atTime:kCMTimeZero error:nil];
-        [firstTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, secondAsset.duration)
-                            ofTrack:[[secondAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0] atTime:firstAsset.duration error:nil];
+        AVMutableCompositionTrack *secondTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeVideo
+                                                                             preferredTrackID:kCMPersistentTrackID_Invalid];
+        [secondTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, secondAsset.duration) 
+                             ofTrack:[[secondAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0] atTime:firstAsset.duration error:nil];
+        
+        
+        // 2.1 - Create AVMutableVideoCompositionInstruction
+        AVMutableVideoCompositionInstruction *mainInstruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
+        mainInstruction.timeRange = CMTimeRangeMake(kCMTimeZero, CMTimeAdd(firstAsset.duration, secondAsset.duration));
+        
+        // 2.2 - Create an AVMutableVideoCompositionLayerInstruction for the first track
+        AVMutableVideoCompositionLayerInstruction *firstlayerInstruction = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:firstTrack];
+        
+        AVAssetTrack *firstAssetTrack = [[firstAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+        
+        UIImageOrientation firstAssetOrientation_  = UIImageOrientationUp;
+        BOOL isFirstAssetPortrait_  = NO;
+        CGAffineTransform firstTransform = firstAssetTrack.preferredTransform;
+        if (firstTransform.a == 0 && firstTransform.b == 1.0 && firstTransform.c == -1.0 && firstTransform.d == 0) {
+            firstAssetOrientation_ = UIImageOrientationRight;
+            isFirstAssetPortrait_ = YES;
+        }
+        if (firstTransform.a == 0 && firstTransform.b == -1.0 && firstTransform.c == 1.0 && firstTransform.d == 0) {
+            firstAssetOrientation_ =  UIImageOrientationLeft;
+            isFirstAssetPortrait_ = YES;
+        }
+        if (firstTransform.a == 1.0 && firstTransform.b == 0 && firstTransform.c == 0 && firstTransform.d == 1.0) {
+            firstAssetOrientation_ =  UIImageOrientationUp;
+        }
+        if (firstTransform.a == -1.0 && firstTransform.b == 0 && firstTransform.c == 0 && firstTransform.d == -1.0) {
+            firstAssetOrientation_ = UIImageOrientationDown;
+        }
+        [firstlayerInstruction setTransform:firstAsset.preferredTransform atTime:kCMTimeZero];
+        [firstlayerInstruction setOpacity:0.0 atTime:firstAsset.duration];
+        
+        // 2.3 - Create an AVMutableVideoCompositionLayerInstruction for the second track
+        AVMutableVideoCompositionLayerInstruction *secondlayerInstruction = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:secondTrack];
+        AVAssetTrack *secondAssetTrack = [[secondAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+        UIImageOrientation secondAssetOrientation_  = UIImageOrientationUp;
+        BOOL isSecondAssetPortrait_  = NO;
+        CGAffineTransform secondTransform = secondAssetTrack.preferredTransform;
+        if (secondTransform.a == 0 && secondTransform.b == 1.0 && secondTransform.c == -1.0 && secondTransform.d == 0) {
+            secondAssetOrientation_= UIImageOrientationRight;
+            isSecondAssetPortrait_ = YES;
+        }
+        if (secondTransform.a == 0 && secondTransform.b == -1.0 && secondTransform.c == 1.0 && secondTransform.d == 0) {
+            secondAssetOrientation_ =  UIImageOrientationLeft;
+            isSecondAssetPortrait_ = YES;
+        }
+        if (secondTransform.a == 1.0 && secondTransform.b == 0 && secondTransform.c == 0 && secondTransform.d == 1.0) {
+            secondAssetOrientation_ =  UIImageOrientationUp;
+        }
+        if (secondTransform.a == -1.0 && secondTransform.b == 0 && secondTransform.c == 0 && secondTransform.d == -1.0) {
+            secondAssetOrientation_ = UIImageOrientationDown;
+        }
+        [secondlayerInstruction setTransform:secondAsset.preferredTransform atTime:firstAsset.duration];
+    
+        // 2.4 - Add instructions
+        mainInstruction.layerInstructions = [NSArray arrayWithObjects:firstlayerInstruction, secondlayerInstruction,nil];
+        AVMutableVideoComposition *mainCompositionInst = [AVMutableVideoComposition videoComposition];
+        mainCompositionInst.instructions = [NSArray arrayWithObject:mainInstruction];
+        mainCompositionInst.frameDuration = CMTimeMake(1, 30);
+        
+        CGSize naturalSizeFirst, naturalSizeSecond;
+        if(isFirstAssetPortrait_){
+            naturalSizeFirst = CGSizeMake(firstAssetTrack.naturalSize.height, firstAssetTrack.naturalSize.width);
+        } else {
+            naturalSizeFirst = firstAssetTrack.naturalSize;
+        }
+        if(isSecondAssetPortrait_){
+            naturalSizeSecond = CGSizeMake(secondAssetTrack.naturalSize.height, secondAssetTrack.naturalSize.width);
+        } else {
+            naturalSizeSecond = secondAssetTrack.naturalSize;
+        }
+        
+        float renderWidth, renderHeight;
+        if(naturalSizeFirst.width > naturalSizeSecond.width) {
+            renderWidth = naturalSizeFirst.width;
+        } else {
+            renderWidth = naturalSizeSecond.width;
+        }
+        if(naturalSizeFirst.height > naturalSizeSecond.height) {
+            renderHeight = naturalSizeFirst.height;
+        } else {
+            renderHeight = naturalSizeSecond.height;
+        }
+        mainCompositionInst.renderSize = CGSizeMake(renderWidth, renderHeight);
+        
         // 3 - Audio track
         if (audioAsset!=nil){
             AVMutableCompositionTrack *AudioTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeAudio
@@ -98,6 +185,7 @@
         exporter.outputURL=url;
         exporter.outputFileType = AVFileTypeQuickTimeMovie;
         exporter.shouldOptimizeForNetworkUse = YES;
+        exporter.videoComposition = mainCompositionInst;
         [exporter exportAsynchronouslyWithCompletionHandler:^{
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self exportDidFinish:exporter];
