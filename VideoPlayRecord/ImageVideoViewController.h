@@ -6,8 +6,10 @@
 //  Copyright (c) 2013 Homage. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+//#import <UIKit/UIKit.h>
 #import <MobileCoreServices/UTCoreTypes.h>
+#import <AVFoundation/AVFoundation.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
 @interface ImageVideoViewController : UIViewController {
     NSMutableArray *_images;
@@ -20,5 +22,10 @@
 
 // Opening the image/video picker
 - (BOOL)startMediaBrowserFromViewController:(UIViewController*)controller usingDelegate:(id)delegate;
+
+// Creating a CVPixelBuffer from a CGImage
+- (CVPixelBufferRef) newPixelBufferFromCGImage: (CGImageRef) image;
+
+-(void)videoWriterDidFinish:(AVAssetWriter*)videoWriter;
 
 @end

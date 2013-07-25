@@ -54,12 +54,147 @@
     }
 }
 
+// This method is called when the user clicks on the "Create Video" button. It will create a video based on the selected photos
 - (IBAction)createVideo:(id)sender {
+    
+    
+    NSError *error = nil;
+    
+    // Create the URL to which the video will be stored/saved
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *myPathDocs =  [documentsDirectory stringByAppendingPathComponent:
+                             [NSString stringWithFormat:@"imageVideo-%d.mov",arc4random() % 1000]];
+    NSURL *outptUrl = [NSURL fileURLWithPath:myPathDocs];
+
+    // Creating the container to which the video will be written to
+    AVAssetWriter *videoWriter = [[AVAssetWriter alloc] initWithURL:outptUrl fileType:AVFileTypeQuickTimeMovie
+                                                              error:&error];
+    NSParameterAssert(videoWriter);
+    
+    // Specifing settings for the new video (codec, width, hieght)
+    NSDictionary *videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   AVVideoCodecH264, AVVideoCodecKey,
+                                   [NSNumber numberWithInt:640], AVVideoWidthKey,
+                                   [NSNumber numberWithInt:480], AVVideoHeightKey,
+                                   nil];
+    
+    // Creating a writer input
+    AVAssetWriterInput* writerInput = [AVAssetWriterInput
+                                        assetWriterInputWithMediaType:AVMediaTypeVideo
+                                       outputSettings:videoSettings];
+    
+    NSParameterAssert(writerInput);
+    NSParameterAssert([videoWriter canAddInput:writerInput]);
+    
+    // Connecting the writer input with the video wrtier
+    [videoWriter addInput:writerInput];
+    
+    //[videoWriter startWriting];
+    //[videoWriter startSessionAtSourceTime:kCMTimeZero];
+    
+    // Or you can use AVAssetWriterInputPixelBufferAdaptor.
+    // That lets you feed the writer input data from a CVPixelBuffer
+    // that’s quite easy to create from a CGImage.
+    //[writerInput appendSampleBuffer:sampleBuffer];
+    
+    // Creating an AVAssetWriterInputPixelBufferAdaptor based on writerInput
+    AVAssetWriterInputPixelBufferAdaptor *assetWriterInputPixelAdapter = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:writerInput sourcePixelBufferAttributes:nil];
+    
+    [videoWriter startWriting];
+    
+    CMTime endSessionTime = kCMTimeZero;
+    [videoWriter startSessionAtSourceTime:kCMTimeZero];
+    
+    for(UIImage *image in _images)
+    {
+        //UIImage *firstImage = [_images objectAtIndex:0];
+        // Appending image to asset writer
+        BOOL appendSuccess = [assetWriterInputPixelAdapter appendPixelBuffer:[self newPixelBufferFromCGImage:image.CGImage] withPresentationTime:CMTimeMake(5, 1)];
+        NSLog(appendSuccess ? @"Append Success" : @"Append Failed");
+    
+        
+        endSessionTime = CMTimeAdd(endSessionTime, CMTimeMake(5, 1));
+    }
+    
+    [writerInput markAsFinished];
+    [videoWriter endSessionAtSourceTime:endSessionTime];
+    
+    [videoWriter finishWritingWithCompletionHandler:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self videoWriterDidFinish:videoWriter];
+        });
+    }];
+    
     
     for(UIImage *image in _images)
     {
         NSLog(@"image to show: %@", [image description]);
     }
+}
+
+-(void)videoWriterDidFinish:(AVAssetWriter*)videoWriter
+{
+    if (videoWriter.status == AVAssetWriterStatusCompleted) {
+        NSURL *outputURL = videoWriter.outputURL;
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:outputURL]) {
+            [library writeVideoAtPathToSavedPhotosAlbum:outputURL completionBlock:^(NSURL *assetURL, NSError *error){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (error) {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Video Saving Failed"
+                                                                       delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                        [alert show];
+                    } else {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Video Saved" message:@"Saved To Photo Album"
+                                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                        [alert show];
+                    }
+                });
+            }];
+        }
+    }
+    else
+    {
+        NSError *error = videoWriter.error;
+        NSLog(@"Error: %@",error.description);
+    }
+
+}
+
+// Creating a CVPixelBuffer from a CGImage
+- (CVPixelBufferRef) newPixelBufferFromCGImage: (CGImageRef) image
+{
+    CGSize frameSize = CGSizeMake(640.0, 480.0);
+    
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:YES], kCVPixelBufferCGImageCompatibilityKey,
+                             [NSNumber numberWithBool:YES], kCVPixelBufferCGBitmapContextCompatibilityKey,
+                             nil];
+    CVPixelBufferRef pxbuffer = NULL;
+    CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault, frameSize.width,
+                                          frameSize.height, kCVPixelFormatType_32ARGB, (__bridge  CFDictionaryRef) options,
+                                          &pxbuffer);
+    NSParameterAssert(status == kCVReturnSuccess && pxbuffer != NULL);
+    
+    CVPixelBufferLockBaseAddress(pxbuffer, 0);
+    void *pxdata = CVPixelBufferGetBaseAddress(pxbuffer);
+    NSParameterAssert(pxdata != NULL);
+    
+    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(pxdata, frameSize.width,
+                                                 frameSize.height, 8, 4*frameSize.width, rgbColorSpace,
+                                                 kCGImageAlphaNoneSkipFirst);
+    NSParameterAssert(context);
+    CGContextConcatCTM(context, CGAffineTransformIdentity);
+    CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(image),
+                                           CGImageGetHeight(image)), image);
+    CGColorSpaceRelease(rgbColorSpace);
+    CGContextRelease(context);
+    
+    CVPixelBufferUnlockBaseAddress(pxbuffer, 0);
+    
+    return pxbuffer;
 }
 
 

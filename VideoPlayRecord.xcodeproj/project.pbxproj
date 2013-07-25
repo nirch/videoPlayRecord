@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F15BB58C179E9B09006648D3 /* ImageVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F15BB58B179E9B09006648D3 /* ImageVideoViewController.m */; };
+		F15BB58E17A15C96006648D3 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F15BB58D17A15C96006648D3 /* CoreVideo.framework */; };
 		F194FE721793E2D800331F32 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F194FE711793E2D800331F32 /* UIKit.framework */; };
 		F194FE741793E2D800331F32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F194FE731793E2D800331F32 /* Foundation.framework */; };
 		F194FE761793E2D800331F32 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F194FE751793E2D800331F32 /* CoreGraphics.framework */; };
@@ -33,6 +34,7 @@
 /* Begin PBXFileReference section */
 		F15BB58A179E9B09006648D3 /* ImageVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageVideoViewController.h; sourceTree = "<group>"; };
 		F15BB58B179E9B09006648D3 /* ImageVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageVideoViewController.m; sourceTree = "<group>"; };
+		F15BB58D17A15C96006648D3 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		F194FE6E1793E2D800331F32 /* VideoPlayRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoPlayRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F194FE711793E2D800331F32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F194FE731793E2D800331F32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -68,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F15BB58E17A15C96006648D3 /* CoreVideo.framework in Frameworks */,
 				F1B754DF1793E3B20035C160 /* AssetsLibrary.framework in Frameworks */,
 				F1B754E01793E3B20035C160 /* AVFoundation.framework in Frameworks */,
 				F1B754E11793E3B20035C160 /* CoreMedia.framework in Frameworks */,
@@ -86,6 +89,7 @@
 		F194FE651793E2D800331F32 = {
 			isa = PBXGroup;
 			children = (
+				F15BB58D17A15C96006648D3 /* CoreVideo.framework */,
 				F1B754D91793E3B20035C160 /* AssetsLibrary.framework */,
 				F1B754DA1793E3B20035C160 /* AVFoundation.framework */,
 				F1B754DB1793E3B20035C160 /* CoreMedia.framework */,
