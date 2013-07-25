@@ -51,12 +51,27 @@
                                     <segue destination="v6B-ZR-om3" kind="push" id="Gqq-gX-dLg"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Glu-ZY-veJ">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Image Video">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="mgP-ep-liD" kind="push" id="imN-D4-1up"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="AeI-aN-A53" firstAttribute="centerX" secondItem="3" secondAttribute="centerX" type="default" id="F4F-3A-I3v"/>
                             <constraint firstItem="AeI-aN-A53" firstAttribute="top" secondItem="3" secondAttribute="top" constant="96" id="OKf-iy-HWq"/>
+                            <constraint firstAttribute="bottom" secondItem="Glu-ZY-veJ" secondAttribute="bottom" constant="140" id="UzA-XN-tfZ"/>
                             <constraint firstItem="AeI-aN-A53" firstAttribute="centerX" secondItem="pOT-es-qcW" secondAttribute="centerX" type="default" id="Zqn-X7-9Va"/>
+                            <constraint firstItem="Glu-ZY-veJ" firstAttribute="centerX" secondItem="xbB-iW-wew" secondAttribute="centerX" type="default" id="h8t-D3-EVg"/>
                             <constraint firstItem="pOT-es-qcW" firstAttribute="top" secondItem="3" secondAttribute="top" constant="175" id="iyu-70-LcG"/>
                             <constraint firstItem="xbB-iW-wew" firstAttribute="centerX" secondItem="pOT-es-qcW" secondAttribute="centerX" type="default" id="xsv-Fi-pb6"/>
                             <constraint firstItem="xbB-iW-wew" firstAttribute="top" secondItem="3" secondAttribute="top" constant="244" id="zxg-J5-z0o"/>
@@ -182,6 +197,55 @@
             </objects>
             <point key="canvasLocation" x="1354" y="395"/>
         </scene>
+        <!--Image Video View Controller-->
+        <scene sceneID="k4r-Qm-HgD">
+            <objects>
+                <viewController id="mgP-ep-liD" customClass="ImageVideoViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kQ2-nJ-O4m">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqn-ht-mzt">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Select Image">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loadImage:" destination="mgP-ep-liD" eventType="touchUpInside" id="X0F-Rl-5Md"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qES-dL-oLe">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Create Video">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="createVideo:" destination="mgP-ep-liD" eventType="touchUpInside" id="gnA-2j-SMD"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qES-dL-oLe" firstAttribute="centerX" secondItem="eqn-ht-mzt" secondAttribute="centerX" type="default" id="86o-zK-98E"/>
+                            <constraint firstItem="qES-dL-oLe" firstAttribute="centerX" secondItem="kQ2-nJ-O4m" secondAttribute="centerX" type="default" id="91p-IL-KaI"/>
+                            <constraint firstItem="qES-dL-oLe" firstAttribute="top" secondItem="kQ2-nJ-O4m" secondAttribute="top" constant="196" id="Sg6-OV-bgb"/>
+                            <constraint firstItem="eqn-ht-mzt" firstAttribute="top" secondItem="kQ2-nJ-O4m" secondAttribute="top" constant="93" id="idB-d7-PXQ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Fig-ia-5Mx"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HkX-1l-Qab" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1354" y="1060"/>
+        </scene>
         <!--Play Video View Controller-->
         <scene sceneID="KAG-wH-u7h">
             <objects>
@@ -235,37 +299,6 @@
             <point key="canvasLocation" x="464" y="80"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="MergeVideoViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MergeVideoViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="loadAssestTwo:"/>
-                <relationship kind="action" name="loadAssetOne:"/>
-                <relationship kind="action" name="loadAssetTwo:"/>
-                <relationship kind="action" name="loadAudio:"/>
-                <relationship kind="action" name="mergeAndSave:"/>
-                <relationship kind="outlet" name="activityView" candidateClass="UIActivityIndicatorView"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="PlayVideoViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlayVideoViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="playVideo:"/>
-            </relationships>
-        </class>
-        <class className="RecordVideoViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RecordVideoViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="recordAndPlay:"/>
-            </relationships>
-        </class>
-        <class className="ViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

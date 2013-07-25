@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F15BB58C179E9B09006648D3 /* ImageVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F15BB58B179E9B09006648D3 /* ImageVideoViewController.m */; };
 		F194FE721793E2D800331F32 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F194FE711793E2D800331F32 /* UIKit.framework */; };
 		F194FE741793E2D800331F32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F194FE731793E2D800331F32 /* Foundation.framework */; };
 		F194FE761793E2D800331F32 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F194FE751793E2D800331F32 /* CoreGraphics.framework */; };
@@ -30,6 +31,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F15BB58A179E9B09006648D3 /* ImageVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageVideoViewController.h; sourceTree = "<group>"; };
+		F15BB58B179E9B09006648D3 /* ImageVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageVideoViewController.m; sourceTree = "<group>"; };
 		F194FE6E1793E2D800331F32 /* VideoPlayRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoPlayRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F194FE711793E2D800331F32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F194FE731793E2D800331F32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -119,6 +122,8 @@
 				F194FE801793E2D800331F32 /* AppDelegate.h */,
 				F194FE811793E2D800331F32 /* AppDelegate.m */,
 				F194FE891793E2D800331F32 /* MainStoryboard.storyboard */,
+				F15BB58A179E9B09006648D3 /* ImageVideoViewController.h */,
+				F15BB58B179E9B09006648D3 /* ImageVideoViewController.m */,
 				F194FE8C1793E2D800331F32 /* ViewController.h */,
 				F194FE8D1793E2D800331F32 /* ViewController.m */,
 				F194FE781793E2D800331F32 /* Supporting Files */,
@@ -218,6 +223,7 @@
 				F1B754E71793E7230035C160 /* PlayVideoViewController.m in Sources */,
 				F1B754EA1793E75F0035C160 /* RecordVideoViewController.m in Sources */,
 				F1B754ED1793E7790035C160 /* MergeVideoViewController.m in Sources */,
+				F15BB58C179E9B09006648D3 /* ImageVideoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
