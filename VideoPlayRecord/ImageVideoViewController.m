@@ -90,57 +90,53 @@
     // Connecting the writer input with the video wrtier
     [videoWriter addInput:writerInput];
     
-    //[videoWriter startWriting];
-    //[videoWriter startSessionAtSourceTime:kCMTimeZero];
-    
-    // Or you can use AVAssetWriterInputPixelBufferAdaptor.
-    // That lets you feed the writer input data from a CVPixelBuffer
-    // that’s quite easy to create from a CGImage.
-    //[writerInput appendSampleBuffer:sampleBuffer];
-    
     // Creating an AVAssetWriterInputPixelBufferAdaptor based on writerInput
     AVAssetWriterInputPixelBufferAdaptor *assetWriterInputPixelAdapter = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:writerInput sourcePixelBufferAttributes:nil];
     
+    // Start writing
     [videoWriter startWriting];
     
-    CMTime endSessionTime = kCMTimeZero;
+    // The duration of each frame in the video is "frameTime". The present time for each fram will start at 0 and then we will add the frame time to the present time for each frame
+    CMTime frameTime = CMTimeMake(3000, 1000);
+    CMTime presentTime = CMTimeMake(0, 1000);
     [videoWriter startSessionAtSourceTime:kCMTimeZero];
-    
+
+    // Looping over all the images we want to append to the video
     for(UIImage *image in _images)
     {
-        //UIImage *firstImage = [_images objectAtIndex:0];
         // Appending image to asset writer
-        BOOL appendSuccess = [assetWriterInputPixelAdapter appendPixelBuffer:[self newPixelBufferFromCGImage:image.CGImage] withPresentationTime:CMTimeMake(5, 1)];
+        BOOL appendSuccess = [assetWriterInputPixelAdapter appendPixelBuffer:[self newPixelBufferFromCGImage:image.CGImage] withPresentationTime:presentTime];
         NSLog(appendSuccess ? @"Append Success" : @"Append Failed");
-    
         
-        endSessionTime = CMTimeAdd(endSessionTime, CMTimeMake(5, 1));
+        // Increasing the present time
+        presentTime = CMTimeAdd(presentTime,frameTime);
     }
     
+    // Finishing the video. The actaul finish process is asynchronic, so we are assigning a completion handler to be invoked once the the video is ready ("videoWriterDidFinish")
     [writerInput markAsFinished];
-    [videoWriter endSessionAtSourceTime:endSessionTime];
-    
+    [videoWriter endSessionAtSourceTime:presentTime];
     [videoWriter finishWritingWithCompletionHandler:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             [self videoWriterDidFinish:videoWriter];
         });
     }];
-    
-    
-    for(UIImage *image in _images)
-    {
-        NSLog(@"image to show: %@", [image description]);
-    }
 }
 
+// This method is triggered once the video writer is done and the video is ready (or there are errors...)
 -(void)videoWriterDidFinish:(AVAssetWriter*)videoWriter
 {
-    if (videoWriter.status == AVAssetWriterStatusCompleted) {
+    // Checking the status of the video wirter
+    if (videoWriter.status == AVAssetWriterStatusCompleted)
+    {
+        // Getting the output URL and validating we can save ir
         NSURL *outputURL = videoWriter.outputURL;
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:outputURL]) {
+        if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:outputURL])
+        {
+            // Saving the video. This is an asynchronous process. The completion block (which is implemented here inline) will be invoked once the saving process finished
             [library writeVideoAtPathToSavedPhotosAlbum:outputURL completionBlock:^(NSURL *assetURL, NSError *error){
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    // Checking if there was an error and notifying the user accordingly
                     if (error) {
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Video Saving Failed"
                                                                        delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -156,10 +152,13 @@
     }
     else
     {
+        // Printing the error to the log
         NSError *error = videoWriter.error;
         NSLog(@"Error: %@",error.description);
     }
 
+    // Initializing the images array
+    _images = [[NSMutableArray alloc] init];
 }
 
 // Creating a CVPixelBuffer from a CGImage
