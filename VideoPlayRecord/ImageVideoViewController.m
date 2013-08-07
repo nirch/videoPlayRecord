@@ -104,8 +104,11 @@
     // Looping over all the images we want to append to the video
     for(UIImage *image in _images)
     {
+        // Resizing image to 640:480
+        UIImage *scaledImage = [self scaleImage:image toSize:CGSizeMake(640.0, 480.0)];
+        
         // Appending image to asset writer
-        BOOL appendSuccess = [assetWriterInputPixelAdapter appendPixelBuffer:[self newPixelBufferFromCGImage:image.CGImage] withPresentationTime:presentTime];
+        BOOL appendSuccess = [assetWriterInputPixelAdapter appendPixelBuffer:[self newPixelBufferFromCGImage:scaledImage.CGImage] withPresentationTime:presentTime];
         NSLog(appendSuccess ? @"Append Success" : @"Append Failed");
         
         // Increasing the present time
@@ -263,6 +266,18 @@
     // Dismissing the image picker
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+// Returning a new imaged scaled to the given size using a given image
+- (UIImage*) scaleImage: (UIImage*)originalImage toSize: (CGSize)newSize
+{
+    UIGraphicsBeginImageContext(newSize);
+    [originalImage drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
 
 
 

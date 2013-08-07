@@ -28,4 +28,7 @@
 
 -(void)videoWriterDidFinish:(AVAssetWriter*)videoWriter;
 
+// Scaling a given image to a given size
+- (UIImage*) scaleImage: (UIImage*)originalImage toSize: (CGSize)newSize;
+
 @end
