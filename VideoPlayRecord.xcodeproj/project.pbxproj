@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		F15BB58C179E9B09006648D3 /* ImageVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F15BB58B179E9B09006648D3 /* ImageVideoViewController.m */; };
 		F15BB58E17A15C96006648D3 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F15BB58D17A15C96006648D3 /* CoreVideo.framework */; };
+		F177F32617B27A8600D293A5 /* Smile.png in Resources */ = {isa = PBXBuildFile; fileRef = F177F32517B27A8600D293A5 /* Smile.png */; };
 		F194FE721793E2D800331F32 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F194FE711793E2D800331F32 /* UIKit.framework */; };
 		F194FE741793E2D800331F32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F194FE731793E2D800331F32 /* Foundation.framework */; };
 		F194FE761793E2D800331F32 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F194FE751793E2D800331F32 /* CoreGraphics.framework */; };
@@ -29,12 +30,14 @@
 		F1B754E71793E7230035C160 /* PlayVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1B754E61793E7230035C160 /* PlayVideoViewController.m */; };
 		F1B754EA1793E75F0035C160 /* RecordVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1B754E91793E75F0035C160 /* RecordVideoViewController.m */; };
 		F1B754ED1793E7790035C160 /* MergeVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1B754EC1793E7790035C160 /* MergeVideoViewController.m */; };
+		F1D78D0B17B26537008B1328 /* TextVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1D78D0A17B26537008B1328 /* TextVideoViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F15BB58A179E9B09006648D3 /* ImageVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageVideoViewController.h; sourceTree = "<group>"; };
 		F15BB58B179E9B09006648D3 /* ImageVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageVideoViewController.m; sourceTree = "<group>"; };
 		F15BB58D17A15C96006648D3 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		F177F32517B27A8600D293A5 /* Smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Smile.png; sourceTree = "<group>"; };
 		F194FE6E1793E2D800331F32 /* VideoPlayRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoPlayRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F194FE711793E2D800331F32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F194FE731793E2D800331F32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -63,6 +66,8 @@
 		F1B754E91793E75F0035C160 /* RecordVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordVideoViewController.m; sourceTree = "<group>"; };
 		F1B754EB1793E7790035C160 /* MergeVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MergeVideoViewController.h; sourceTree = "<group>"; };
 		F1B754EC1793E7790035C160 /* MergeVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MergeVideoViewController.m; sourceTree = "<group>"; };
+		F1D78D0917B26537008B1328 /* TextVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextVideoViewController.h; path = ../TextVideoViewController.h; sourceTree = "<group>"; };
+		F1D78D0A17B26537008B1328 /* TextVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextVideoViewController.m; path = ../TextVideoViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +94,7 @@
 		F194FE651793E2D800331F32 = {
 			isa = PBXGroup;
 			children = (
+				F177F32517B27A8600D293A5 /* Smile.png */,
 				F15BB58D17A15C96006648D3 /* CoreVideo.framework */,
 				F1B754D91793E3B20035C160 /* AssetsLibrary.framework */,
 				F1B754DA1793E3B20035C160 /* AVFoundation.framework */,
@@ -123,6 +129,8 @@
 		F194FE771793E2D800331F32 /* VideoPlayRecord */ = {
 			isa = PBXGroup;
 			children = (
+				F1D78D0917B26537008B1328 /* TextVideoViewController.h */,
+				F1D78D0A17B26537008B1328 /* TextVideoViewController.m */,
 				F194FE801793E2D800331F32 /* AppDelegate.h */,
 				F194FE811793E2D800331F32 /* AppDelegate.m */,
 				F194FE891793E2D800331F32 /* MainStoryboard.storyboard */,
@@ -211,6 +219,7 @@
 				F194FE861793E2D800331F32 /* Default@2x.png in Resources */,
 				F194FE881793E2D800331F32 /* Default-568h@2x.png in Resources */,
 				F194FE8B1793E2D800331F32 /* MainStoryboard.storyboard in Resources */,
+				F177F32617B27A8600D293A5 /* Smile.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,6 +237,7 @@
 				F1B754EA1793E75F0035C160 /* RecordVideoViewController.m in Sources */,
 				F1B754ED1793E7790035C160 /* MergeVideoViewController.m in Sources */,
 				F15BB58C179E9B09006648D3 /* ImageVideoViewController.m in Sources */,
+				F1D78D0B17B26537008B1328 /* TextVideoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
