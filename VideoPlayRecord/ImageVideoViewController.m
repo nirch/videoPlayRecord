@@ -115,6 +115,17 @@
         presentTime = CMTimeAdd(presentTime,frameTime);
     }
     
+    // If there is only one image in the array, there is a need to append it again in the last time (otherwise the video will always be 0 seconds long)
+    if (_images.count == 1)
+    {
+        // Resizing image to 640:480
+        UIImage *scaledImage = [self scaleImage:[_images objectAtIndex:0] toSize:CGSizeMake(640.0, 480.0)];
+        
+        // Appending image to asset writer
+        BOOL appendSuccess = [assetWriterInputPixelAdapter appendPixelBuffer:[self newPixelBufferFromCGImage:scaledImage.CGImage] withPresentationTime:presentTime];
+        NSLog(appendSuccess ? @"Append Success" : @"Append Failed");
+    }
+    
     // Finishing the video. The actaul finish process is asynchronic, so we are assigning a completion handler to be invoked once the the video is ready ("videoWriterDidFinish")
     [writerInput markAsFinished];
     [videoWriter endSessionAtSourceTime:presentTime];
