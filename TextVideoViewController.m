@@ -27,6 +27,13 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    // Getting a path and a URL to the video in this project
+    NSString *videoPath = [[NSBundle mainBundle] pathForResource:@"Red" ofType:@"mov"];
+    NSURL   *videoURL = [NSURL fileURLWithPath:videoPath];
+    
+    // Initialaing the video asset with the video embedded in this project
+    _videoAsset = [[AVURLAsset alloc]initWithURL:videoURL  options:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,74 +42,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)selectVideo:(id)sender {
-    
-    // Checking if a picker controller is available
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum] == NO)
-    {
-        /// Not available - showing a message to the user
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"No Saved Album Found"
-                                                       delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-    } else
-    {
-        // Picker is available - showing the media picker
-        [self startMediaBrowserFromViewController:self usingDelegate:self];
-    }
-
-}
-
-// This method will show the user a media picker for picking a video
--(BOOL)startMediaBrowserFromViewController:(UIViewController*)controller usingDelegate:(id)delegate {
-   
-    // Validations
-    if (([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum] == NO)
-        || (delegate == nil)
-        || (controller == nil))
-    {
-        return NO;
-    }
-    
-    
-    // Creating a picker that will show the user movies to pick from
-    UIImagePickerController *mediaUI = [[UIImagePickerController alloc] init];
-    mediaUI.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    mediaUI.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie, nil];
-    // Hides the controls for moving & scaling pictures, or for
-    // trimming movies. To instead show the controls, use YES.
-    mediaUI.allowsEditing = YES;
-    mediaUI.delegate = delegate;
-    
-    // Display image picker
-    //[controller presentModalViewController: mediaUI animated: YES];
-    [controller presentViewController:mediaUI animated:YES completion:nil];
-    return YES;
-}
-
-// This method will be called once the user finished selecting the video
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    
-    // Get media type
-    NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
-    
-    // Dismiss image picker
-    //[self dismissModalViewControllerAnimated:NO];
-    [self dismissViewControllerAnimated:NO completion:nil];
-    
-    // Checking that the selected media type is indeed a video
-    if (CFStringCompare ((__bridge_retained CFStringRef) mediaType, kUTTypeMovie, 0) == kCFCompareEqualTo) {
-        NSLog(@"Video Loaded");
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Asset Loaded" message:@"Video One Loaded"
-                                                           delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        
-        _videoAsset = [[AVURLAsset alloc]initWithURL:[info objectForKey:UIImagePickerControllerMediaURL]  options:nil];
-    }
-}
-
-
-
+// This method creates a new video using the embedded video and the text that the user has provided
 - (IBAction)createTextVideo:(id)sender {
+    
     
     AVMutableComposition* mixComposition = [AVMutableComposition composition];
     
@@ -123,7 +65,8 @@
     [parentLayer addSublayer:videoLayer];
 
     CATextLayer *titleLayer = [CATextLayer layer];
-    titleLayer.string = @"Text goes here";
+    titleLayer.string = self.inputText.text;
+    //titleLayer.string = @"Text goes here";
     titleLayer.font = (__bridge CFTypeRef)(@"Helvetica");
     titleLayer.fontSize = videoSize.height / 6;
     //?? titleLayer.shadowOpacity = 0.5;
@@ -176,13 +119,16 @@
     
 }
 
+// This method is called when the new video is ready to be saved
 -(void)exportDidFinish:(AVAssetExportSession*)session
 {
     NSURL *exportUrl = session.outputURL;
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     
+    // Validating that the new video can be saved in the photo album
     if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:exportUrl])
     {
+        // Saving the video
         [library writeVideoAtPathToSavedPhotosAlbum:exportUrl completionBlock:^(NSURL *assetURL, NSError *error)
          {
              dispatch_async(dispatch_get_main_queue(), ^{
@@ -200,10 +146,19 @@
         
     }
     NSLog(@"Completed");
-    //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"AlertView" message:@"Video is edited successfully." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    //[alert show];
-    //[alert release];
+}
+
+// This method is invoked when the user clicked on the return (done) button of a text field keyboard
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    // Closing the keyboard if this is the correct text field
+    if (textField == _inputText)
+    {
+        [_inputText resignFirstResponder];
+    }
     
+    // Returning NO beacuse this is a non-default behaviuor
+    return NO;
 }
 
 @end

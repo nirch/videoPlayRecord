@@ -140,19 +140,6 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yzm-57-D4z">
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Select Video">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="selectVideo:" destination="ivV-0P-4MI" eventType="touchUpInside" id="EIP-TF-Uxu"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbY-rZ-GS2">
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Create Video with Text">
@@ -166,16 +153,27 @@
                                     <action selector="createTextVideo:" destination="ivV-0P-4MI" eventType="touchUpInside" id="hSr-7Q-0Fm"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8oD-R3-RZL">
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="ivV-0P-4MI" id="Ii0-0v-d3G"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="fbY-rZ-GS2" firstAttribute="top" secondItem="mRB-bx-IzJ" secondAttribute="top" constant="201" id="1jg-He-IxN"/>
-                            <constraint firstItem="yzm-57-D4z" firstAttribute="top" secondItem="mRB-bx-IzJ" secondAttribute="top" constant="83" id="3y2-Z5-1CZ"/>
-                            <constraint firstItem="fbY-rZ-GS2" firstAttribute="centerX" secondItem="mRB-bx-IzJ" secondAttribute="centerX" type="default" id="bxM-MS-Fpz"/>
-                            <constraint firstItem="fbY-rZ-GS2" firstAttribute="centerX" secondItem="yzm-57-D4z" secondAttribute="centerX" type="default" id="zzL-u5-Hrx"/>
+                            <constraint firstItem="8oD-R3-RZL" firstAttribute="trailing" secondItem="fbY-rZ-GS2" secondAttribute="trailing" type="default" id="6P1-oE-lwB"/>
+                            <constraint firstItem="8oD-R3-RZL" firstAttribute="top" secondItem="mRB-bx-IzJ" secondAttribute="top" constant="163" id="Isr-W2-JmD"/>
+                            <constraint firstItem="fbY-rZ-GS2" firstAttribute="top" secondItem="8oD-R3-RZL" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="aeS-eX-tah"/>
+                            <constraint firstItem="fbY-rZ-GS2" firstAttribute="centerX" secondItem="mRB-bx-IzJ" secondAttribute="centerX" type="default" id="gnd-rD-Bfy"/>
+                            <constraint firstItem="fbY-rZ-GS2" firstAttribute="leading" secondItem="8oD-R3-RZL" secondAttribute="leading" type="default" id="n15-3e-s1z"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="OqS-A3-Qch"/>
+                    <connections>
+                        <outlet property="inputText" destination="8oD-R3-RZL" id="aMN-FJ-5xP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vJJ-Rp-H67" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -363,52 +361,6 @@
             <point key="canvasLocation" x="464" y="80"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="ImageVideoViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ImageVideoViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="createVideo:"/>
-                <relationship kind="action" name="loadImage:"/>
-                <relationship kind="action" name="saveImagesDone:"/>
-            </relationships>
-        </class>
-        <class className="MergeVideoViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MergeVideoViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="loadAssestTwo:"/>
-                <relationship kind="action" name="loadAssetOne:"/>
-                <relationship kind="action" name="loadAssetTwo:"/>
-                <relationship kind="action" name="loadAudio:"/>
-                <relationship kind="action" name="mergeAndSave:"/>
-                <relationship kind="outlet" name="activityView" candidateClass="UIActivityIndicatorView"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="PlayVideoViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlayVideoViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="playVideo:"/>
-            </relationships>
-        </class>
-        <class className="RecordVideoViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RecordVideoViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="recordAndPlay:"/>
-            </relationships>
-        </class>
-        <class className="TextVideoViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TextVideoViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="createTextVideo:"/>
-                <relationship kind="action" name="selectVideo:"/>
-            </relationships>
-        </class>
-        <class className="ViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

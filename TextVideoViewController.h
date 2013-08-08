@@ -13,12 +13,12 @@
 
 
 
-@interface TextVideoViewController : UIViewController
+@interface TextVideoViewController : UIViewController <UITextFieldDelegate>
 
 @property(nonatomic, strong) AVURLAsset *videoAsset;
+@property (weak, nonatomic) IBOutlet UITextField *inputText;
 
-- (IBAction)selectVideo:(id)sender;
 - (IBAction)createTextVideo:(id)sender;
--(BOOL)startMediaBrowserFromViewController:(UIViewController*)controller usingDelegate:(id)delegate;
 -(void)exportDidFinish:(AVAssetExportSession*)session;
+
 @end

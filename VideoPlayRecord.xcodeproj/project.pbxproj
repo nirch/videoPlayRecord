@@ -10,6 +10,7 @@
 		F15BB58C179E9B09006648D3 /* ImageVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F15BB58B179E9B09006648D3 /* ImageVideoViewController.m */; };
 		F15BB58E17A15C96006648D3 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F15BB58D17A15C96006648D3 /* CoreVideo.framework */; };
 		F177F32617B27A8600D293A5 /* Smile.png in Resources */ = {isa = PBXBuildFile; fileRef = F177F32517B27A8600D293A5 /* Smile.png */; };
+		F177F32817B3790100D293A5 /* Red.mov in Resources */ = {isa = PBXBuildFile; fileRef = F177F32717B3790100D293A5 /* Red.mov */; };
 		F194FE721793E2D800331F32 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F194FE711793E2D800331F32 /* UIKit.framework */; };
 		F194FE741793E2D800331F32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F194FE731793E2D800331F32 /* Foundation.framework */; };
 		F194FE761793E2D800331F32 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F194FE751793E2D800331F32 /* CoreGraphics.framework */; };
@@ -38,6 +39,7 @@
 		F15BB58B179E9B09006648D3 /* ImageVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageVideoViewController.m; sourceTree = "<group>"; };
 		F15BB58D17A15C96006648D3 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		F177F32517B27A8600D293A5 /* Smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Smile.png; sourceTree = "<group>"; };
+		F177F32717B3790100D293A5 /* Red.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Red.mov; sourceTree = "<group>"; };
 		F194FE6E1793E2D800331F32 /* VideoPlayRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoPlayRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F194FE711793E2D800331F32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F194FE731793E2D800331F32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -129,6 +131,7 @@
 		F194FE771793E2D800331F32 /* VideoPlayRecord */ = {
 			isa = PBXGroup;
 			children = (
+				F177F32717B3790100D293A5 /* Red.mov */,
 				F1D78D0917B26537008B1328 /* TextVideoViewController.h */,
 				F1D78D0A17B26537008B1328 /* TextVideoViewController.m */,
 				F194FE801793E2D800331F32 /* AppDelegate.h */,
@@ -220,6 +223,7 @@
 				F194FE881793E2D800331F32 /* Default-568h@2x.png in Resources */,
 				F194FE8B1793E2D800331F32 /* MainStoryboard.storyboard in Resources */,
 				F177F32617B27A8600D293A5 /* Smile.png in Resources */,
+				F177F32817B3790100D293A5 /* Red.mov in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
