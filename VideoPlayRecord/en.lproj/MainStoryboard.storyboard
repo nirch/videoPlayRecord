@@ -80,15 +80,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="xbB-iW-wew" firstAttribute="top" secondItem="3" secondAttribute="top" constant="166" id="3nZ-26-ldC"/>
-                            <constraint firstAttribute="bottom" secondItem="sB9-KU-KTJ" secondAttribute="bottom" constant="143" id="43i-pe-7np"/>
+                            <constraint firstAttribute="bottom" secondItem="sB9-KU-KTJ" secondAttribute="bottom" constant="97" id="1B0-Sr-Fmp"/>
+                            <constraint firstItem="xbB-iW-wew" firstAttribute="top" secondItem="3" secondAttribute="top" constant="134" id="I5Y-3k-KoO"/>
+                            <constraint firstItem="AeI-aN-A53" firstAttribute="top" secondItem="3" secondAttribute="top" constant="15" id="M4T-Wf-gXe"/>
                             <constraint firstItem="xbB-iW-wew" firstAttribute="trailing" secondItem="Glu-ZY-veJ" secondAttribute="trailing" type="default" id="T79-Yx-ioS"/>
-                            <constraint firstItem="Glu-ZY-veJ" firstAttribute="centerX" secondItem="3" secondAttribute="centerX" type="default" id="YVD-QH-pJ4"/>
                             <constraint firstItem="AeI-aN-A53" firstAttribute="centerX" secondItem="pOT-es-qcW" secondAttribute="centerX" type="default" id="Zqn-X7-9Va"/>
                             <constraint firstItem="sB9-KU-KTJ" firstAttribute="centerX" secondItem="Glu-ZY-veJ" secondAttribute="centerX" type="default" id="Zzj-aE-Aur"/>
-                            <constraint firstItem="pOT-es-qcW" firstAttribute="top" secondItem="3" secondAttribute="top" constant="97" id="dOB-0x-B53"/>
-                            <constraint firstItem="Glu-ZY-veJ" firstAttribute="top" secondItem="3" secondAttribute="top" constant="242" id="gcA-eO-ISk"/>
-                            <constraint firstItem="AeI-aN-A53" firstAttribute="top" secondItem="3" secondAttribute="top" constant="20" symbolic="YES" type="default" id="jsU-53-u6i"/>
+                            <constraint firstItem="Glu-ZY-veJ" firstAttribute="centerX" secondItem="3" secondAttribute="centerX" type="default" id="drP-I8-Pcj"/>
+                            <constraint firstItem="Glu-ZY-veJ" firstAttribute="top" secondItem="3" secondAttribute="top" constant="200" id="lnL-Wr-Bwp"/>
+                            <constraint firstItem="pOT-es-qcW" firstAttribute="top" secondItem="3" secondAttribute="top" constant="76" id="xLI-Ft-OVE"/>
                             <constraint firstItem="xbB-iW-wew" firstAttribute="centerX" secondItem="pOT-es-qcW" secondAttribute="centerX" type="default" id="xsv-Fi-pb6"/>
                         </constraints>
                     </view>
@@ -142,7 +142,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbY-rZ-GS2">
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Create Video with Text">
+                                <state key="normal" title="Create Video (using video)">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -153,21 +153,36 @@
                                     <action selector="createTextVideo:" destination="ivV-0P-4MI" eventType="touchUpInside" id="hSr-7Q-0Fm"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8oD-R3-RZL">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Text to be Displayed" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8oD-R3-RZL">
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                 <connections>
                                     <outlet property="delegate" destination="ivV-0P-4MI" id="Ii0-0v-d3G"/>
                                 </connections>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PcL-FS-LVG">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Create Video (using image)">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="createVideoByImage:" destination="ivV-0P-4MI" eventType="touchUpInside" id="oOg-B8-F3V"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="8oD-R3-RZL" firstAttribute="trailing" secondItem="fbY-rZ-GS2" secondAttribute="trailing" type="default" id="6P1-oE-lwB"/>
-                            <constraint firstItem="8oD-R3-RZL" firstAttribute="top" secondItem="mRB-bx-IzJ" secondAttribute="top" constant="163" id="Isr-W2-JmD"/>
-                            <constraint firstItem="fbY-rZ-GS2" firstAttribute="top" secondItem="8oD-R3-RZL" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="aeS-eX-tah"/>
-                            <constraint firstItem="fbY-rZ-GS2" firstAttribute="centerX" secondItem="mRB-bx-IzJ" secondAttribute="centerX" type="default" id="gnd-rD-Bfy"/>
-                            <constraint firstItem="fbY-rZ-GS2" firstAttribute="leading" secondItem="8oD-R3-RZL" secondAttribute="leading" type="default" id="n15-3e-s1z"/>
+                            <constraint firstItem="8oD-R3-RZL" firstAttribute="leading" secondItem="mRB-bx-IzJ" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="788-bQ-kau"/>
+                            <constraint firstItem="fbY-rZ-GS2" firstAttribute="top" secondItem="mRB-bx-IzJ" secondAttribute="top" constant="65" id="GOY-4Q-BxV"/>
+                            <constraint firstItem="8oD-R3-RZL" firstAttribute="top" secondItem="mRB-bx-IzJ" secondAttribute="top" constant="20" symbolic="YES" type="default" id="J2u-8R-KRu"/>
+                            <constraint firstItem="fbY-rZ-GS2" firstAttribute="centerX" secondItem="8oD-R3-RZL" secondAttribute="centerX" type="default" id="TSo-TE-XFe"/>
+                            <constraint firstAttribute="trailing" secondItem="8oD-R3-RZL" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="btx-kf-uJl"/>
+                            <constraint firstItem="PcL-FS-LVG" firstAttribute="centerX" secondItem="fbY-rZ-GS2" secondAttribute="centerX" type="default" id="lOk-El-gCp"/>
+                            <constraint firstItem="PcL-FS-LVG" firstAttribute="top" secondItem="mRB-bx-IzJ" secondAttribute="top" constant="128" id="o1U-94-Fvl"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="OqS-A3-Qch"/>
@@ -361,6 +376,53 @@
             <point key="canvasLocation" x="464" y="80"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="ImageVideoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ImageVideoViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="createVideo:"/>
+                <relationship kind="action" name="loadImage:"/>
+                <relationship kind="action" name="saveImagesDone:"/>
+            </relationships>
+        </class>
+        <class className="MergeVideoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MergeVideoViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="loadAssestTwo:"/>
+                <relationship kind="action" name="loadAssetOne:"/>
+                <relationship kind="action" name="loadAssetTwo:"/>
+                <relationship kind="action" name="loadAudio:"/>
+                <relationship kind="action" name="mergeAndSave:"/>
+                <relationship kind="outlet" name="activityView" candidateClass="UIActivityIndicatorView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PlayVideoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlayVideoViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="playVideo:"/>
+            </relationships>
+        </class>
+        <class className="RecordVideoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/RecordVideoViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="recordAndPlay:"/>
+            </relationships>
+        </class>
+        <class className="TextVideoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TextVideoViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="createTextVideo:"/>
+                <relationship kind="action" name="createVideoByImage:"/>
+                <relationship kind="outlet" name="inputText" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="ViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
