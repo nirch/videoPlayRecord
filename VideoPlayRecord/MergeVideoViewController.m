@@ -14,7 +14,7 @@
 
 @implementation MergeVideoViewController
 
-@synthesize firstAsset, secondAsset, audioAsset;
+@synthesize firstAsset, secondAsset, audioAsset, audioURL;
 @synthesize activityView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -30,6 +30,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    videoURLs = [[NSMutableArray alloc] init];
 }
 
 - (void)didReceiveMemoryWarning
@@ -68,6 +70,16 @@
 }
 
 - (IBAction)mergeAndSave:(id)sender {
+    
+    [VideoUtils mergeVideos:[videoURLs copy] withSoundtrack:audioURL completion:^(AVAssetExportSession *exporter){[self exportDidFinish:exporter];}];
+
+    
+//    ^{
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self exportDidFinish:exporter];
+//        });
+//    }{
+/*
     if (firstAsset !=nil && secondAsset!=nil) {
         [activityView startAnimating];
         // 1 - Create AVMutableComposition object. This object will hold your AVMutableCompositionTrack instances.
@@ -192,6 +204,7 @@
             });
         }];
     }
+ */
 }
 
 -(BOOL)startMediaBrowserFromViewController:(UIViewController*)controller usingDelegate:(id)delegate {
@@ -226,12 +239,16 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Asset Loaded" message:@"Video One Loaded"
                                                            delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
+            
+            [videoURLs addObject:[info objectForKey:UIImagePickerControllerMediaURL]];
             firstAsset = [AVAsset assetWithURL:[info objectForKey:UIImagePickerControllerMediaURL]];
         } else {
             NSLog(@"Video two Loaded");
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Asset Loaded" message:@"Video Two Loaded"
                                                            delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
+            
+            [videoURLs addObject:[info objectForKey:UIImagePickerControllerMediaURL]];
             secondAsset = [AVAsset assetWithURL:[info objectForKey:UIImagePickerControllerMediaURL]];
         }
     }
@@ -243,6 +260,7 @@
         MPMediaItem *songItem = [selectedSong objectAtIndex:0];
         NSURL *songURL = [songItem valueForProperty:MPMediaItemPropertyAssetURL];
         audioAsset = [AVAsset assetWithURL:songURL];
+        audioURL = songURL;
         NSLog(@"Audio Loaded");
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Asset Loaded" message:@"Audio Loaded"
                                                        delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -278,6 +296,7 @@
     audioAsset = nil;
     firstAsset = nil;
     secondAsset = nil;
+    videoURLs = [[NSMutableArray alloc] init];
     [activityView stopAnimating];
 }
 

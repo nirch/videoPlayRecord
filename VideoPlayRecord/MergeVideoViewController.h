@@ -11,15 +11,20 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "VideoUtils.h"
 
 @interface MergeVideoViewController: UIViewController {
     BOOL isSelectingAssetOne;
+    NSMutableArray *videoURLs;
 }
 
 @property(nonatomic, strong) AVAsset *firstAsset;
 @property(nonatomic, strong) AVAsset *secondAsset;
 @property(nonatomic, strong) AVAsset *audioAsset;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
+
+@property(nonatomic, strong) NSURL *audioURL;
+
 
 -(IBAction)loadAssetOne:(id)sender;
 -(IBAction)loadAssetTwo:(id)sender;

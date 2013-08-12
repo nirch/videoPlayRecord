@@ -11,6 +11,7 @@
 		F15BB58E17A15C96006648D3 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F15BB58D17A15C96006648D3 /* CoreVideo.framework */; };
 		F177F32817B3790100D293A5 /* Red.mov in Resources */ = {isa = PBXBuildFile; fileRef = F177F32717B3790100D293A5 /* Red.mov */; };
 		F18AC77B17B399A1006E7D8C /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F18AC77A17B399A1006E7D8C /* background.jpg */; };
+		F194668317B3BC1800DB947C /* VideoUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F194668217B3BC1800DB947C /* VideoUtils.m */; };
 		F194FE721793E2D800331F32 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F194FE711793E2D800331F32 /* UIKit.framework */; };
 		F194FE741793E2D800331F32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F194FE731793E2D800331F32 /* Foundation.framework */; };
 		F194FE761793E2D800331F32 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F194FE751793E2D800331F32 /* CoreGraphics.framework */; };
@@ -40,6 +41,8 @@
 		F15BB58D17A15C96006648D3 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		F177F32717B3790100D293A5 /* Red.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Red.mov; sourceTree = "<group>"; };
 		F18AC77A17B399A1006E7D8C /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
+		F194668117B3BC1800DB947C /* VideoUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoUtils.h; sourceTree = "<group>"; };
+		F194668217B3BC1800DB947C /* VideoUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoUtils.m; sourceTree = "<group>"; };
 		F194FE6E1793E2D800331F32 /* VideoPlayRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoPlayRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F194FE711793E2D800331F32 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F194FE731793E2D800331F32 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -148,6 +151,8 @@
 				F1B754E91793E75F0035C160 /* RecordVideoViewController.m */,
 				F1B754EB1793E7790035C160 /* MergeVideoViewController.h */,
 				F1B754EC1793E7790035C160 /* MergeVideoViewController.m */,
+				F194668117B3BC1800DB947C /* VideoUtils.h */,
+				F194668217B3BC1800DB947C /* VideoUtils.m */,
 			);
 			path = VideoPlayRecord;
 			sourceTree = "<group>";
@@ -242,6 +247,7 @@
 				F1B754ED1793E7790035C160 /* MergeVideoViewController.m in Sources */,
 				F15BB58C179E9B09006648D3 /* ImageVideoViewController.m in Sources */,
 				F1D78D0B17B26537008B1328 /* TextVideoViewController.m in Sources */,
+				F194668317B3BC1800DB947C /* VideoUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
