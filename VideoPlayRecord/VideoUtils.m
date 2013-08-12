@@ -10,7 +10,13 @@
 
 // Private methods
 @interface VideoUtils ()
-//- (id)aPrivateMethod;
+
+// Returning a new imaged scaled to the given size using a given image
++(UIImage*) scaleImage: (UIImage*)originalImage toSize: (CGSize)newSize;
+
+// Creating a CVPixelBuffer from a CGImage
++(CVPixelBufferRef) newPixelBufferFromCGImage: (CGImageRef) image;
+
 @end
 
 @implementation VideoUtils
@@ -78,8 +84,7 @@
     exporter.shouldOptimizeForNetworkUse = YES;
     //exporter.videoComposition = MainCompositionInst;
     
-    
-    // Setting the completion method that will be invoked asynchronously once the new video is ready
+    // Doing the actual export and setting the completion method that will be invoked asynchronously once the new video is ready
     [exporter exportAsynchronouslyWithCompletionHandler:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             completion(exporter);
@@ -89,9 +94,85 @@
 }
 
 // This method transformes a list of images into a video. It receives an array of images (UIImage) and frame time in milliseconds for the time that each image will be displayed in the video. The completion method will be called asynchronously once the new video is ready
-+(void)imagesToVideo:(NSArray*)images withFrameTime:(int64_t)frameTimeMS completion:(void (^)(void))completion
++(void)imagesToVideo:(NSArray*)images withFrameTime:(int64_t)frameTimeMS completion:(void (^)(AVAssetWriter*))completion
 {
+    NSError *error = nil;
     
+    // Create the URL to which the video will be stored/saved
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *myPathDocs =  [documentsDirectory stringByAppendingPathComponent:
+                             [NSString stringWithFormat:@"imageVideo-%d.mov",arc4random() % 1000]];
+    NSURL *outptUrl = [NSURL fileURLWithPath:myPathDocs];
+    
+    // Creating the container to which the video will be written to
+    AVAssetWriter *videoWriter = [[AVAssetWriter alloc] initWithURL:outptUrl fileType:AVFileTypeQuickTimeMovie
+                                                              error:&error];
+    NSParameterAssert(videoWriter);
+    
+    // Specifing settings for the new video (codec, width, hieght)
+    NSDictionary *videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   AVVideoCodecH264, AVVideoCodecKey,
+                                   [NSNumber numberWithInt:640], AVVideoWidthKey,
+                                   [NSNumber numberWithInt:480], AVVideoHeightKey,
+                                   nil];
+    
+    // Creating a writer input
+    AVAssetWriterInput* writerInput = [AVAssetWriterInput
+                                       assetWriterInputWithMediaType:AVMediaTypeVideo
+                                       outputSettings:videoSettings];
+    
+    NSParameterAssert(writerInput);
+    NSParameterAssert([videoWriter canAddInput:writerInput]);
+    
+    // Connecting the writer input with the video wrtier
+    [videoWriter addInput:writerInput];
+    
+    // Creating an AVAssetWriterInputPixelBufferAdaptor based on writerInput
+    AVAssetWriterInputPixelBufferAdaptor *assetWriterInputPixelAdapter = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:writerInput sourcePixelBufferAttributes:nil];
+    
+    // Start writing
+    [videoWriter startWriting];
+    
+    // The duration of each frame in the video is "frameTime". The present time for each fram will start at 0 and then we will add the frame time to the present time for each frame
+    CMTime frameTime = CMTimeMake(frameTimeMS, 1000);
+    CMTime presentTime = CMTimeMake(0, 1000);
+    [videoWriter startSessionAtSourceTime:kCMTimeZero];
+    
+    // Looping over all the images we want to append to the video
+    for(UIImage *image in images)
+    {
+        // Resizing image to 640:480
+        UIImage *scaledImage = [self scaleImage:image toSize:CGSizeMake(640.0, 480.0)];
+        
+        // Appending image to asset writer
+        BOOL appendSuccess = [assetWriterInputPixelAdapter appendPixelBuffer:[self newPixelBufferFromCGImage:scaledImage.CGImage] withPresentationTime:presentTime];
+        NSLog(appendSuccess ? @"Append Success" : @"Append Failed");
+        
+        // Increasing the present time
+        presentTime = CMTimeAdd(presentTime,frameTime);
+    }
+    
+    // If there is only one image in the array, there is a need to append it again in the last time (otherwise the video will always be 0 seconds long)
+    if (images.count == 1)
+    {
+        // Resizing image to 640:480
+        UIImage *scaledImage = [self scaleImage:[images objectAtIndex:0] toSize:CGSizeMake(640.0, 480.0)];
+        
+        // Appending image to asset writer
+        BOOL appendSuccess = [assetWriterInputPixelAdapter appendPixelBuffer:[self newPixelBufferFromCGImage:scaledImage.CGImage] withPresentationTime:presentTime];
+        NSLog(appendSuccess ? @"Append Success" : @"Append Failed");
+    }
+    
+    // Finishing the video. The actaul finish process is asynchronic, so we are assigning a completion handler to be invoked once the the video is ready
+    [writerInput markAsFinished];
+    [videoWriter endSessionAtSourceTime:presentTime];
+    [videoWriter finishWritingWithCompletionHandler:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(videoWriter);
+        });
+    }];
+
 }
 
 // This method addes text to video. It recevies a video (as a URL) and the text that will be displyed on the video. The completion method will be called asynchronously once the new video is ready
@@ -99,6 +180,59 @@
 {
     
 }
+
+
+
+
+
+// *** "Private methods" ***
+
+// Returning a new imaged scaled to the given size using a given image
++(UIImage*) scaleImage: (UIImage*)originalImage toSize: (CGSize)newSize
+{
+    UIGraphicsBeginImageContext(newSize);
+    [originalImage drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
+// Creating a CVPixelBuffer from a CGImage
++(CVPixelBufferRef) newPixelBufferFromCGImage: (CGImageRef) image
+{
+    CGSize frameSize = CGSizeMake(640.0, 480.0);
+    
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:YES], kCVPixelBufferCGImageCompatibilityKey,
+                             [NSNumber numberWithBool:YES], kCVPixelBufferCGBitmapContextCompatibilityKey,
+                             nil];
+    CVPixelBufferRef pxbuffer = NULL;
+    CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault, frameSize.width,
+                                          frameSize.height, kCVPixelFormatType_32ARGB, (__bridge  CFDictionaryRef) options,
+                                          &pxbuffer);
+    NSParameterAssert(status == kCVReturnSuccess && pxbuffer != NULL);
+    
+    CVPixelBufferLockBaseAddress(pxbuffer, 0);
+    void *pxdata = CVPixelBufferGetBaseAddress(pxbuffer);
+    NSParameterAssert(pxdata != NULL);
+    
+    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(pxdata, frameSize.width,
+                                                 frameSize.height, 8, 4*frameSize.width, rgbColorSpace,
+                                                 kCGImageAlphaNoneSkipFirst);
+    NSParameterAssert(context);
+    CGContextConcatCTM(context, CGAffineTransformIdentity);
+    CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(image),
+                                           CGImageGetHeight(image)), image);
+    CGColorSpaceRelease(rgbColorSpace);
+    CGContextRelease(context);
+    
+    CVPixelBufferUnlockBaseAddress(pxbuffer, 0);
+    
+    return pxbuffer;
+}
+
 
 
 @end

@@ -10,25 +10,23 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <AVFoundation/AVFoundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "VideoUtils.h"
 
 @interface ImageVideoViewController : UIViewController {
-    NSMutableArray *_images;
-    UIBarButtonItem *_doneButton;
+    NSMutableArray *images;
+    UIBarButtonItem *doneButton;
 }
 
+// Select images
 - (IBAction)loadImage:(id)sender;
 
+// Creating a video from the selected images
 - (IBAction)createVideo:(id)sender;
 
 // Opening the image/video picker
 - (BOOL)startMediaBrowserFromViewController:(UIViewController*)controller usingDelegate:(id)delegate;
 
-// Creating a CVPixelBuffer from a CGImage
-- (CVPixelBufferRef) newPixelBufferFromCGImage: (CGImageRef) image;
-
+// completion handler for when the video is ready
 -(void)videoWriterDidFinish:(AVAssetWriter*)videoWriter;
-
-// Scaling a given image to a given size
-- (UIImage*) scaleImage: (UIImage*)originalImage toSize: (CGSize)newSize;
 
 @end
