@@ -57,7 +57,7 @@
 // This method is called when the user clicks on the "Create Video" button. It will create a video based on the selected photos
 - (IBAction)createVideo:(id)sender {
     
-    // Our VideoUtils has a method for rendering a list of images into a video
+    // Creating a video from a list of images. The completion handler will be invoked once the new video is ready (or there are errors...)
     [VideoUtils imagesToVideo:images withFrameTime:2500 completion:^(AVAssetWriter *videoWriter) {
         [self videoWriterDidFinish:videoWriter];
     }];
