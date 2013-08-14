@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F1468F7A17BB872C0098A4C8 /* TikimViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1468F7917BB872C0098A4C8 /* TikimViewController.m */; };
+		F1468F7C17BBBCC20098A4C8 /* Homage_Tikim.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F1468F7B17BBBCC20098A4C8 /* Homage_Tikim.mp3 */; };
 		F15BB58C179E9B09006648D3 /* ImageVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F15BB58B179E9B09006648D3 /* ImageVideoViewController.m */; };
 		F15BB58E17A15C96006648D3 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F15BB58D17A15C96006648D3 /* CoreVideo.framework */; };
 		F177F32817B3790100D293A5 /* Red.mov in Resources */ = {isa = PBXBuildFile; fileRef = F177F32717B3790100D293A5 /* Red.mov */; };
@@ -36,6 +38,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F1468F7817BB872C0098A4C8 /* TikimViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TikimViewController.h; sourceTree = "<group>"; };
+		F1468F7917BB872C0098A4C8 /* TikimViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TikimViewController.m; sourceTree = "<group>"; };
+		F1468F7B17BBBCC20098A4C8 /* Homage_Tikim.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Homage_Tikim.mp3; sourceTree = "<group>"; };
 		F15BB58A179E9B09006648D3 /* ImageVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageVideoViewController.h; sourceTree = "<group>"; };
 		F15BB58B179E9B09006648D3 /* ImageVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageVideoViewController.m; sourceTree = "<group>"; };
 		F15BB58D17A15C96006648D3 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -133,6 +138,7 @@
 		F194FE771793E2D800331F32 /* VideoPlayRecord */ = {
 			isa = PBXGroup;
 			children = (
+				F1468F7B17BBBCC20098A4C8 /* Homage_Tikim.mp3 */,
 				F18AC77A17B399A1006E7D8C /* background.jpg */,
 				F177F32717B3790100D293A5 /* Red.mov */,
 				F1D78D0917B26537008B1328 /* TextVideoViewController.h */,
@@ -153,6 +159,8 @@
 				F1B754EC1793E7790035C160 /* MergeVideoViewController.m */,
 				F194668117B3BC1800DB947C /* VideoUtils.h */,
 				F194668217B3BC1800DB947C /* VideoUtils.m */,
+				F1468F7817BB872C0098A4C8 /* TikimViewController.h */,
+				F1468F7917BB872C0098A4C8 /* TikimViewController.m */,
 			);
 			path = VideoPlayRecord;
 			sourceTree = "<group>";
@@ -229,6 +237,7 @@
 				F194FE8B1793E2D800331F32 /* MainStoryboard.storyboard in Resources */,
 				F177F32817B3790100D293A5 /* Red.mov in Resources */,
 				F18AC77B17B399A1006E7D8C /* background.jpg in Resources */,
+				F1468F7C17BBBCC20098A4C8 /* Homage_Tikim.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,6 +257,7 @@
 				F15BB58C179E9B09006648D3 /* ImageVideoViewController.m in Sources */,
 				F1D78D0B17B26537008B1328 /* TextVideoViewController.m in Sources */,
 				F194668317B3BC1800DB947C /* VideoUtils.m in Sources */,
+				F1468F7A17BB872C0098A4C8 /* TikimViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
