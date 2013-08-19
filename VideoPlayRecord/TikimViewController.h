@@ -24,12 +24,12 @@
     UIImagePickerController *sighPicker;
     
     
-    NSURL *preRaceVideoUrl;
-    NSURL *feetVideoUrl;
-    NSURL *raceVideoUrl;
-    NSURL *heroLingersVideoUrl;
-    NSURL *finishLineVideoUrl;
-    NSURL *sighVideoUrl;
+    NSURL *preRaceVideoScaledUrl;
+    NSURL *feetVideoScaledUrl;
+    NSURL *raceVideoScaledUrl;
+    NSURL *heroLingersVideoScaledUrl;
+    NSURL *finishLineVideoScaledUrl;
+    NSURL *sighVideoScaledUrl;
     
     NSURL *textVideoUrl;
     NSURL *imageVideoUrl;
@@ -56,5 +56,9 @@
 
 // Called when the video is ready
 -(void)exportDidFinish:(AVAssetExportSession*)exporter;
+
+// Called when the scaling of the video is ready
+-(NSURL*)exportScaledVideoDidFinish:(AVAssetExportSession*)exporter withMessage:(NSString*) messgae;
+
 
 @end

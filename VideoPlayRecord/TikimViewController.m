@@ -83,26 +83,37 @@
 
 - (IBAction)selectPreRaceVideo:(id)sender {
     
+    // Opening the media picker to select a video
     preRacePicker = [self startMediaBrowserFromViewController:self withMediaTypes:[[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie, nil] usingDelegate:self ];
 }
 
 - (IBAction)selectFeetVideo:(id)sender {
+    
+    // Opening the media picker to select a video
     feetPicker = [self startMediaBrowserFromViewController:self withMediaTypes:[[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie, nil] usingDelegate:self ];
 }
 
 - (IBAction)selectRaceVideo:(id)sender {
+    
+    // Opening the media picker to select a video
     racePicker = [self startMediaBrowserFromViewController:self withMediaTypes:[[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie, nil] usingDelegate:self ];
 }
 
 - (IBAction)selectHeroLingersVideo:(id)sender {
+    
+    // Opening the media picker to select a video
     heroLingersPicker = [self startMediaBrowserFromViewController:self withMediaTypes:[[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie, nil] usingDelegate:self ];
 }
 
 - (IBAction)selectFinishLineVideo:(id)sender {
+    
+    // Opening the media picker to select a video
     finishLinePicker = [self startMediaBrowserFromViewController:self withMediaTypes:[[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie, nil] usingDelegate:self ];
 }
 
 - (IBAction)selectSighVideo:(id)sender {
+    
+    // Opening the media picker to select a video
     sighPicker = [self startMediaBrowserFromViewController:self withMediaTypes:[[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie, nil] usingDelegate:self ];
 }
 
@@ -110,7 +121,7 @@
 - (IBAction)createTikimVideo:(id)sender {
     
     // Creating an array of all the videos that should be merged
-    NSArray *videos = [[NSArray alloc] initWithObjects:textVideoUrl, imageVideoUrl, preRaceVideoUrl, feetVideoUrl,raceVideoUrl,heroLingersVideoUrl,finishLineVideoUrl, sighVideoUrl, nil];
+    NSArray *videos = [[NSArray alloc] initWithObjects:textVideoUrl, imageVideoUrl, preRaceVideoScaledUrl, feetVideoScaledUrl,raceVideoScaledUrl,heroLingersVideoScaledUrl,finishLineVideoScaledUrl, sighVideoScaledUrl, nil];
     
     // Getting a path and a URL to the soundtrack in this project
     NSString *soundtrackPath = [[NSBundle mainBundle] pathForResource:@"Homage_Tikim" ofType:@"mp3"];
@@ -182,7 +193,7 @@
     return mediaUI;
 }
 
-// This method is called after the user picked a media (images or video). Since we are selecting variuos medias in this view, we will first check from which picker this event was called, then we will save the URL to the media and close the picker
+// This method is called after the user picked a media (images or video). Since we are selecting variuos medias in this view, we will first check from which picker this event was called, then we will scale the video to the desired duration, save the URL to the scaled video and close the picker
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     
@@ -199,42 +210,78 @@
     }
     else if (picker == preRacePicker)
     {
-        // Closing the picker and saving the URL to the video
+        // Closing the picker and scaling the duration of this video
         [self dismissViewControllerAnimated:NO completion:nil];
-        preRaceVideoUrl = [info objectForKey:UIImagePickerControllerMediaURL];
+        NSURL *preRaceVideoUrl = [info objectForKey:UIImagePickerControllerMediaURL];
+        [VideoUtils scaleVideo:preRaceVideoUrl toDuration:CMTimeMake(560, 100) completion:^(AVAssetExportSession *exporter) {
+            preRaceVideoScaledUrl = [self exportScaledVideoDidFinish:exporter withMessage:@"Pre-race Video"];
+        }];
     }
     else if (picker == feetPicker)
     {
-        // Closing the picker and saving the URL to the video
+        // Closing the picker and scaling the duration of this video
         [self dismissViewControllerAnimated:NO completion:nil];
-        feetVideoUrl = [info objectForKey:UIImagePickerControllerMediaURL];
+        NSURL *feetVideoUrl = [info objectForKey:UIImagePickerControllerMediaURL];
+        [VideoUtils scaleVideo:feetVideoUrl toDuration:CMTimeMake(450, 100) completion:^(AVAssetExportSession *exporter) {
+            feetVideoScaledUrl = [self exportScaledVideoDidFinish:exporter withMessage:@"Pre-race Video"];
+        }];
     }
     else if (picker == racePicker)
     {
-        // Closing the picker and saving the URL to the video
+        // Closing the picker and scaling the duration of this video
         [self dismissViewControllerAnimated:NO completion:nil];
-        raceVideoUrl = [info objectForKey:UIImagePickerControllerMediaURL];
+        NSURL *raceVideoUrl = [info objectForKey:UIImagePickerControllerMediaURL];
+        [VideoUtils scaleVideo:raceVideoUrl toDuration:CMTimeMake(945, 100) completion:^(AVAssetExportSession *exporter) {
+            raceVideoScaledUrl = [self exportScaledVideoDidFinish:exporter withMessage:@"Pre-race Video"];
+        }];
     }
     else if (picker == heroLingersPicker)
     {
-        // Closing the picker and saving the URL to the video
+        // Closing the picker and scaling the duration of this video
         [self dismissViewControllerAnimated:NO completion:nil];
-        heroLingersVideoUrl = [info objectForKey:UIImagePickerControllerMediaURL];
+        NSURL *heroLingersVideoUrl = [info objectForKey:UIImagePickerControllerMediaURL];
+        [VideoUtils scaleVideo:heroLingersVideoUrl toDuration:CMTimeMake(600, 100) completion:^(AVAssetExportSession *exporter) {
+            heroLingersVideoScaledUrl = [self exportScaledVideoDidFinish:exporter withMessage:@"Pre-race Video"];
+        }];
     }
     else if (picker == finishLinePicker)
     {
-        // Closing the picker and saving the URL to the video
+        // Closing the picker and scaling the duration of this video
         [self dismissViewControllerAnimated:NO completion:nil];
-        finishLineVideoUrl = [info objectForKey:UIImagePickerControllerMediaURL];
+        NSURL *finishLineVideoUrl = [info objectForKey:UIImagePickerControllerMediaURL];
+        [VideoUtils scaleVideo:finishLineVideoUrl toDuration:CMTimeMake(1530, 100) completion:^(AVAssetExportSession *exporter) {
+            finishLineVideoScaledUrl = [self exportScaledVideoDidFinish:exporter withMessage:@"Pre-race Video"];
+        }];
     }
     else if (picker == sighPicker)
     {
-        // Closing the picker and saving the URL to the video
+        // Closing the picker and scaling the duration of this video
         [self dismissViewControllerAnimated:NO completion:nil];
-        sighVideoUrl = [info objectForKey:UIImagePickerControllerMediaURL];
+        NSURL *sighVideoUrl = [info objectForKey:UIImagePickerControllerMediaURL];
+        [VideoUtils scaleVideo:sighVideoUrl toDuration:CMTimeMake(340, 100) completion:^(AVAssetExportSession *exporter) {
+            sighVideoScaledUrl = [self exportScaledVideoDidFinish:exporter withMessage:@"Pre-race Video"];
+        }];
     }
 }
 
+// Called when the scaling of the video is ready
+-(NSURL*)exportScaledVideoDidFinish:(AVAssetExportSession*)exporter withMessage:(NSString*) message
+{
+    // Checking the status of the video wirter
+    if (exporter.status == AVAssetExportSessionStatusCompleted)
+    {
+        // Getting the output URL
+        NSLog(@"%@ scaled is ready", message);
+        return exporter.outputURL;
+    }
+    else
+    {
+        // Printing the error to the log
+        NSError *error = exporter.error;
+        NSLog(@"%@ scaled error: %@",message, error.description);
+        return nil;
+    }
+}
 
 // Adding a "done" button to the top of the navigation bar
 - (void)navigationController:(UINavigationController *)navigationController
