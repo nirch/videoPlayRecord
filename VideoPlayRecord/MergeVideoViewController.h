@@ -32,5 +32,7 @@
 -(IBAction)mergeAndSave:(id)sender;
 -(BOOL)startMediaBrowserFromViewController:(UIViewController*)controller usingDelegate:(id)delegate;
 -(void)exportDidFinish:(AVAssetExportSession*)session;
+- (IBAction)speedVideo:(id)sender;
+- (IBAction)slowVideo:(id)sender;
 
 @end

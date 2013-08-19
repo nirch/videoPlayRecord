@@ -262,6 +262,53 @@
 }
 
 
+// This methods scales the given video into a different duration (makes the video faster or slower). The completion method will be called asynchronously once the new video is ready
++(void)scaleVideo:(NSURL*)videoURL toDuration:(CMTime)duration completion:(void (^)(AVAssetExportSession*))completion
+{
+    // Creating the composition object. This object will hold the composition track instances
+    AVMutableComposition *mainComposition = [[AVMutableComposition alloc] init];
+    
+    // Creating a composition track for the video which is also added to the main composition oject
+    AVMutableCompositionTrack *compositionVideoTrack = [mainComposition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
+
+    // TODO: Check if the URL is really a video
+        
+    // Creating a video asset for the current video URL
+    AVAsset *videoAsset = [AVAsset assetWithURL:videoURL];
+        
+    // Inserting the video to the composition track in the correct time range
+    [compositionVideoTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset.duration) ofTrack:[[videoAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0] atTime:kCMTimeZero error:nil];
+    
+    // scaling the video (making it faster/slower)
+    [compositionVideoTrack scaleTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset.duration) toDuration:duration];
+    
+    // Exporting the new scaled video
+    
+    // Getting the path to the documents directory
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    // Creating a full path and URL to the exported video
+    NSString *outputVideoPath =  [documentsDirectory stringByAppendingPathComponent:
+                                  [NSString stringWithFormat:@"scaleVideo-%d.mov",arc4random() % 1000]];
+    NSURL *outptVideoUrl = [NSURL fileURLWithPath:outputVideoPath];
+    
+    // Creating an export session using the main composition
+    AVAssetExportSession *exporter = [[AVAssetExportSession alloc] initWithAsset:mainComposition presetName:AVAssetExportPresetHighestQuality];
+    
+    // Setting attributes of the exporter
+    exporter.outputURL=outptVideoUrl;
+    exporter.outputFileType = AVFileTypeQuickTimeMovie;
+    exporter.shouldOptimizeForNetworkUse = YES;
+    
+    // Doing the actual export and setting the completion method that will be invoked asynchronously once the new video is ready
+    [exporter exportAsynchronouslyWithCompletionHandler:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(exporter);
+        });
+    }];
+
+}
 
 
 

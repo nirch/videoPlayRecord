@@ -300,4 +300,21 @@
     [activityView stopAnimating];
 }
 
+- (IBAction)speedVideo:(id)sender {
+    
+    // Making the video 50% faster
+    CMTime duration = CMTimeMultiplyByFloat64(firstAsset.duration, 1.5);
+    
+    [VideoUtils scaleVideo:[videoURLs objectAtIndex:0] toDuration:duration completion:^(AVAssetExportSession *exporter){[self exportDidFinish:exporter];}];
+    
+}
+
+- (IBAction)slowVideo:(id)sender {
+    
+    // Making the video 50% slower
+    CMTime duration = CMTimeMultiplyByFloat64(firstAsset.duration, 0.5);
+    
+    [VideoUtils scaleVideo:[videoURLs objectAtIndex:0] toDuration:duration completion:^(AVAssetExportSession *exporter){[self exportDidFinish:exporter];}];
+}
+
 @end

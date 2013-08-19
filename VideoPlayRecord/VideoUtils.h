@@ -22,4 +22,7 @@
 // This method addes text to video. It recevies a video (as a URL) and the text that will be displyed on the video. The completion method will be called asynchronously once the new video is ready
 +(void)textOnVideo:(NSURL*)videoURL withText:(NSString*)text completion:(void (^)(AVAssetExportSession*))completion;
 
+// This methods scales the given video into a different duration (makes the video faster or slower). The completion method will be called asynchronously once the new video is ready
++(void)scaleVideo:(NSURL*)videoURL toDuration:(CMTime)duration completion:(void (^)(AVAssetExportSession*))completion;
+
 @end
